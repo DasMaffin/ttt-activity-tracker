@@ -138,6 +138,10 @@ function PANEL:CloseAllCards()
 end
 
 function ActivityTracker:TogglePanel()
+    if ULib and ulx and not LocalPlayer():IsSuperAdmin() then
+        return
+    end
+
     if not IsValid(activityBaseHUD) then
         activityBaseHUD = vgui.Create("ActivityTrackerBaseHUD")
     end

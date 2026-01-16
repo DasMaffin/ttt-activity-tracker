@@ -7,7 +7,6 @@ if SERVER then
     AddCSLuaFile("vgui/base.lua")
     AddCSLuaFile("vgui/fonts.lua")
     AddCSLuaFile("vgui/data_display.lua")
-    AddCSLuaFile("cl/inputmanager.lua")
     
     include("sv/activity_manager.lua")
 
@@ -16,5 +15,6 @@ elseif CLIENT then
     include("vgui/base.lua")
     include("vgui/fonts.lua")
     include("vgui/data_display.lua")
-    include("cl/inputmanager.lua")    
+
+    concommand.Add("toggleActivityTracker", ActivityTracker.TogglePanel, nil, "Opens the activity tracker menu", 0)
 end

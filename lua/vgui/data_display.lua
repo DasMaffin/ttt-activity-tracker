@@ -212,6 +212,4 @@ net.Receive("CollectDataForDisplaying", function(len, ply)
     local activities = net.ReadTable()
 
     dataDisplayHUD:DisplayActivities(activities)
-
-    PrintTable(activities)
 end)
