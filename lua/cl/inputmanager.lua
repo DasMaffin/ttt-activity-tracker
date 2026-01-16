@@ -10,7 +10,9 @@ local function checkKey(key)
 end
 
 hook.Add("Think", "InputManagerActivityTracker", function(ply, key)
-    checkKey(KEY_F2)
+    if ULib and ulx and ply:IsSuperAdmin() then
+        checkKey(KEY_F2)
+    end
 end)
 
 hook.Add("keyPressed", "OnKeyPressedActivityTracker", function(key)
