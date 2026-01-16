@@ -9,8 +9,8 @@ local function checkKey(key)
     end
 end
 
-hook.Add("Think", "InputManagerActivityTracker", function(ply, key)
-    if ULib and ulx and ply:IsSuperAdmin() then
+hook.Add("Think", "InputManagerActivityTracker", function()
+    if ULib and ulx and LocalPlayer():IsSuperAdmin() then
         checkKey(KEY_F2)
     end
 end)
