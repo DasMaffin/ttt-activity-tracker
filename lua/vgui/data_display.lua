@@ -217,7 +217,6 @@ net.Receive("CollectDataForDisplaying", function(len, ply)
     for _, activity in ipairs(chunk) do -- do this to flatten the table. Without this it would be chunkedActivities[chunk][index], now its just chunkedActivites[index]
         table.insert(chunkedActivities, activity)
     end
-    PrintTable(chunkedActivities)
 
     dataDisplayHUD:DisplayActivities(chunkedActivities)
 end)

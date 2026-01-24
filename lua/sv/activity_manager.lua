@@ -98,7 +98,6 @@ net.Receive("CollectDataForDisplaying", function(len, ply)
 
     for _, chunk in ipairs(sendBackActivity) do
         local json = util.TableToJSON(chunk)
-        print("JSON size:", #json, "bytes")
         net.Start("CollectDataForDisplaying")
         net.WriteUInt(_, 16)              -- chunk index
         net.WriteUInt(#sendBackActivity, 16) -- total chunks
