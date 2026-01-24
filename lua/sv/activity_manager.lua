@@ -78,16 +78,33 @@ net.Receive("CollectDataForDisplaying", function(len, ply)
         isdst = false
     })
     local sendBackActivity = {}
+    local chunkSize = 100
+    local chunkIndex = 1
+    local i = 1
     if ActivityTracker.allActivities[timerange.player] then
         for _, activity in ipairs(ActivityTracker.allActivities[timerange.player]) do
             if activity.startTime < toTimestamp and activity.endTime > fromTimestamp then
-                table.insert(sendBackActivity, activity)
+                i = i + 1
+                if not sendBackActivity[chunkIndex] then
+                    sendBackActivity[chunkIndex] = {}
+                end
+                table.insert(sendBackActivity[chunkIndex], activity)
+                if i % chunkSize == 0 then
+                    chunkIndex = chunkIndex + 1
+                end
             end
         end
     end
-    net.Start("CollectDataForDisplaying")
-    net.WriteTable(sendBackActivity)
-    net.Send(ply)
+
+    for _, chunk in ipairs(sendBackActivity) do
+        local json = util.TableToJSON(chunk)
+        print("JSON size:", #json, "bytes")
+        net.Start("CollectDataForDisplaying")
+        net.WriteUInt(_, 16)              -- chunk index
+        net.WriteUInt(#sendBackActivity, 16) -- total chunks
+        net.WriteTable(chunk)
+        net.Send(ply)
+    end
 end)
 
 function loadAllActivities()

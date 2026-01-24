@@ -208,8 +208,16 @@ function PANEL:CreateDataDisplay(label, data, gui)
     return dataLabel
 end
 
+local chunkedActivities = {}
 net.Receive("CollectDataForDisplaying", function(len, ply)
-    local activities = net.ReadTable()
+    local currentChunk = net.ReadInt(16)
+    local totalChunks = net.ReadInt(16)
+    local chunk = net.ReadTable()
+    if currentChunk == 1 then chunkedActivities = {} end
+    for _, activity in ipairs(chunk) do -- do this to flatten the table. Without this it would be chunkedActivities[chunk][index], now its just chunkedActivites[index]
+        table.insert(chunkedActivities, activity)
+    end
+    PrintTable(chunkedActivities)
 
-    dataDisplayHUD:DisplayActivities(activities)
+    dataDisplayHUD:DisplayActivities(chunkedActivities)
 end)
